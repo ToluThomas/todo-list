@@ -1,0 +1,12 @@
+node_modules
+.vscode
+
+#iOS
+*.lock
+ios/Pods
+
+# Android
+android/build/
+.idea
+.gradle
+android/local.properties
