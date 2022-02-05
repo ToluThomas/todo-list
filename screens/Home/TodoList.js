@@ -15,7 +15,9 @@ export default function TodoList({ navigation, ...props }) {
   function onChangeTodoListItemText(index, newValue) {
     setTodoItems((oldTodoItems) =>
       oldTodoItems.map((item, itemIndex) =>
-        itemIndex === index ? newValue : item
+        itemIndex === index
+          ? { text: newValue, done: oldTodoItems[index].done }
+          : item
       )
     );
   }
@@ -26,20 +28,24 @@ export default function TodoList({ navigation, ...props }) {
     );
   }
 
-  function onKeyPress(nativeEvent, item, index) {
-    if (nativeEvent?.key === "Backspace" && item === "") {
+  function onKeyPress(nativeEvent, text, index) {
+    if (nativeEvent?.key === "Backspace" && text === "") {
       popTodoItemFromList(index);
     }
   }
 
   function _renderItem({ item, index }) {
+    let { text, done } = item;
     return (
       <TodoListItem
         reference={index === todoItems.length - 1 ? lastItemRef : undefined}
         index={index}
-        text={item}
+        text={text}
+        done={done}
         onChangeText={onChangeTodoListItemText}
-        onKeyPress={({ nativeEvent }) => onKeyPress(nativeEvent, item, index)}
+        onKeyPress={({ nativeEvent }) =>
+          onKeyPress(nativeEvent, item.text, index)
+        }
       />
     );
   }
