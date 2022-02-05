@@ -22,7 +22,8 @@ export default function TodoList({ navigation, ...props }) {
   function onChangeTodoListItemText(index, newValue) {
     setTodoItems((oldTodoItems) => [
       ...oldTodoItems.slice(0, index),
-      { text: newValue, done: todoItems[index].done },
+      // Remove new line from ToDo list item and insert new ToDo object
+      { text: newValue.replace(/\r?\n|\r/g, ""), done: todoItems[index].done },
       ...oldTodoItems.slice(index + 1),
     ]);
   }
