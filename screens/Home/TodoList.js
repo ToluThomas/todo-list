@@ -37,6 +37,11 @@ export default function TodoList({ navigation, ...props }) {
     if (nativeEvent?.key === "Backspace" && text === "") {
       popTodoItemFromList(index);
     }
+
+    // Show new ToDo item when user taps the enter/return key
+    if (nativeEvent?.key === "Enter") {
+      newTodoListItem();
+    }
   }
 
   function onTick(index) {
