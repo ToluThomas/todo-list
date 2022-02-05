@@ -2,12 +2,21 @@ import React from "react";
 import { TextInput, View } from "react-native";
 import { homeStyles } from "../constants/styles";
 import CircleOutline from "./CircleOutline";
+import Tick from "./Tick";
 
-export default function TodoListItem({ index, text, onChangeText, onKeyPress }) {
+export default function TodoListItem({
+  index,
+  text,
+  onChangeText,
+  onKeyPress,
+  reference,
+  ticked = false,
+}) {
   return (
     <View style={homeStyles.todoListItem} key={index}>
-      <CircleOutline />
+      <CircleOutline children={ticked ? <Tick /> : null} />
       <TextInput
+        ref={reference}
         placeholder=""
         style={homeStyles.todoListItemText}
         multiline

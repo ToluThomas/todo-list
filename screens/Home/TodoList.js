@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import HeaderPlusButton from "../../components/HeaderPlusButton";
 import TodoListItem from "../../components/TodoListItem";
@@ -6,6 +6,11 @@ import { homeStyles } from "../../constants/styles";
 
 export default function TodoList({ navigation, ...props }) {
   const [todoItems, setTodoItems] = useState([]);
+  const lastItemRef = useRef();
+
+  useEffect(() => {
+    lastItemRef?.current?.focus(); // Focus on the last ToDo item
+  }, [todoItems.length]); // When ToDo list gets updated, update the ref of the last ToDo item
 
   function onChangeTodoListItemText(index, newValue) {
     setTodoItems((oldTodoItems) =>
@@ -30,6 +35,7 @@ export default function TodoList({ navigation, ...props }) {
   function _renderItem({ item, index }) {
     return (
       <TodoListItem
+        reference={index === todoItems.length - 1 ? lastItemRef : undefined}
         index={index}
         text={item}
         onChangeText={onChangeTodoListItemText}
