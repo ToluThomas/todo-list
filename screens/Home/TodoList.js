@@ -9,6 +9,12 @@ export default function TodoList({ navigation, ...props }) {
   const lastItemRef = useRef();
 
   useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderPlusButton onPress={newTodoListItem} />,
+    });
+  }, []); //  Set back button when the component mounts
+  
+  useEffect(() => {
     lastItemRef?.current?.focus(); // Focus on the last ToDo item
   }, [todoItems.length]); // When ToDo list gets updated, update the ref of the last ToDo item
 
@@ -28,12 +34,14 @@ export default function TodoList({ navigation, ...props }) {
     ]);
   }
 
+  // Remove a ToDo list item from the list of ToDo's
   function popTodoItemFromList(index) {
     setTodoItems((oldTodoItems) =>
       oldTodoItems.filter((item, itemIndex) => itemIndex !== index)
     );
   }
 
+  // Listen for when certain keys are pressed
   function onKeyPress(nativeEvent, text, index) {
     if (nativeEvent?.key === "Backspace" && text === "") {
       popTodoItemFromList(index);
@@ -45,6 +53,7 @@ export default function TodoList({ navigation, ...props }) {
     }
   }
 
+  // Handle tick and untick presses
   function onTick(index) {
     setTodoItems((oldTodoItems) =>
       oldTodoItems.map((item, itemIndex) =>
@@ -55,11 +64,12 @@ export default function TodoList({ navigation, ...props }) {
     );
   }
 
+  // Render a ToDo list item
   function _renderItem({ item, index }) {
-    let { text, done } = item;
+    let { text, done } = item; // Destructure what's needed from the item
     return (
       <TodoListItem
-        reference={index === todoItems.length - 1 ? lastItemRef : undefined}
+        reference={index === todoItems.length - 1 ? lastItemRef : undefined} //  Pass ref only if item is the last item
         index={index}
         text={text}
         done={done}
@@ -72,6 +82,7 @@ export default function TodoList({ navigation, ...props }) {
     );
   }
 
+  //  When there are no items in the list, show an empty state
   function emptyListItem() {
     return (
       <Text style={homeStyles.emptyTodoListItem}>
@@ -79,12 +90,6 @@ export default function TodoList({ navigation, ...props }) {
       </Text>
     );
   }
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <HeaderPlusButton onPress={newTodoListItem} />,
-    });
-  }, []); //  Set back button when the component mounts
 
   return (
     <View style={homeStyles.todoList}>

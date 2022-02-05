@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 import { scale, verticalScale } from "../utils/scale";
 
+/**
+ * Styles for the home screen
+ */
 export const homeStyles = StyleSheet.create({
   headerButtonRight: {
     width: scale(30),
@@ -25,6 +28,9 @@ export const homeStyles = StyleSheet.create({
   emptyTodoListItem: { textAlign: "center" },
 });
 
+/**
+ * Styles for the ToDo checkbox
+ */
 export const checkboxStyles = StyleSheet.create({
   circleOutline: {
     backgroundColor: "white",
