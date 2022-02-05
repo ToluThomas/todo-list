@@ -15,12 +15,25 @@ export default function TodoList({ navigation, ...props }) {
     );
   }
 
+  function popTodoItemFromList(index) {
+    setTodoItems((oldTodoItems) =>
+      oldTodoItems.filter((item, itemIndex) => itemIndex !== index)
+    );
+  }
+
+  function onKeyPress(nativeEvent, item, index) {
+    if (nativeEvent?.key === "Backspace" && item === "") {
+      popTodoItemFromList(index);
+    }
+  }
+
   function _renderItem({ item, index }) {
     return (
       <TodoListItem
         index={index}
         text={item}
         onChangeText={onChangeTodoListItemText}
+        onKeyPress={({ nativeEvent }) => onKeyPress(nativeEvent, item, index)}
       />
     );
   }
