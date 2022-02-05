@@ -31,4 +31,12 @@ export const checkboxStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: scale(30),
   },
+  tickIcon: {
+    fontSize: scale(14),
+    textAlign: "center",
+    // paddingTop: scale(2),
+  },
+  tickIconBackground: {
+    backgroundColor: "white",
+  },
 });

@@ -11,10 +11,17 @@ export default function TodoListItem({
   onKeyPress,
   reference,
   done = false,
+  onTick = () => {},
 }) {
   return (
     <View style={homeStyles.todoListItem} key={index}>
-      <CircleOutline children={done ? <Tick /> : null} />
+      {done ? (
+        <Tick onPress={onTick} />
+      ) : (
+        <CircleOutline
+          onPress={onTick}
+        />
+      )}
       <TextInput
         ref={reference}
         placeholder=""
