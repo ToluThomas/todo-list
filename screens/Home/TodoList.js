@@ -12,14 +12,19 @@ export default function TodoList({ navigation, ...props }) {
     lastItemRef?.current?.focus(); // Focus on the last ToDo item
   }, [todoItems.length]); // When ToDo list gets updated, update the ref of the last ToDo item
 
+  function newTodoListItem() {
+    setTodoItems((oldTodoItems) => [
+      ...oldTodoItems,
+      { text: "", done: false },
+    ]);
+  }
+
   function onChangeTodoListItemText(index, newValue) {
-    setTodoItems((oldTodoItems) =>
-      oldTodoItems.map((item, itemIndex) =>
-        itemIndex === index
-          ? { text: newValue, done: oldTodoItems[index].done }
-          : item
-      )
-    );
+    setTodoItems((oldTodoItems) => [
+      ...oldTodoItems.slice(0, index),
+      { text: newValue, done: todoItems[index].done },
+      ...oldTodoItems.slice(index + 1),
+    ]);
   }
 
   function popTodoItemFromList(index) {
@@ -34,6 +39,16 @@ export default function TodoList({ navigation, ...props }) {
     }
   }
 
+  function onTick(index) {
+    setTodoItems((oldTodoItems) =>
+      oldTodoItems.map((item, itemIndex) =>
+        itemIndex === index
+          ? { ...oldTodoItems[index], done: !oldTodoItems[index].done }
+          : item
+      )
+    );
+  }
+
   function _renderItem({ item, index }) {
     let { text, done } = item;
     return (
@@ -46,12 +61,9 @@ export default function TodoList({ navigation, ...props }) {
         onKeyPress={({ nativeEvent }) =>
           onKeyPress(nativeEvent, item.text, index)
         }
+        onTick={() => onTick(index)}
       />
     );
-  }
-
-  function newTodoListItem() {
-    setTodoItems((oldTodoItems) => [...oldTodoItems, ""]);
   }
 
   function emptyListItem() {
