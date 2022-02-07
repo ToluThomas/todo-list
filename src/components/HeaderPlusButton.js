@@ -1,16 +1,14 @@
 import React from "react";
-import { TouchableWithoutFeedback, Text } from "react-native";
+import { TouchableWithoutFeedback, Text, useColorScheme } from "react-native";
 import { homeStyles } from "../constants/styles";
 import { scale, verticalScale } from "../utils/scale";
 
-export default function HeaderPlusButton({
-  style = homeStyles.headerButtonRight,
-  textStyle = homeStyles.headerButtonRightText,
-  ...props
-}) {
+export default function HeaderPlusButton({ style, textStyle, ...props }) {
+  const theme = useColorScheme();
+
   return (
     <TouchableWithoutFeedback
-      style={style}
+      style={style || homeStyles(theme).headerButtonRight}
       hitSlop={{
         top: verticalScale(30),
         bottom: verticalScale(30),
@@ -19,7 +17,9 @@ export default function HeaderPlusButton({
       }}
       {...props}
     >
-      <Text style={textStyle}>+</Text>
+      <Text style={textStyle || homeStyles(theme).headerButtonRightText}>
+        +
+      </Text>
     </TouchableWithoutFeedback>
   );
 }

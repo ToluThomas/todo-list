@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useEffect, useMemo, useRef } from "react";
+import { View, Text, FlatList, useColorScheme } from "react-native";
 import { connect } from "react-redux";
 import HeaderPlusButton from "../../components/HeaderPlusButton";
 import TodoListItem from "../../components/TodoListItem";
@@ -14,14 +14,19 @@ import {
 function TodoList({ navigation, ...props }) {
   // const [todoItems, setTodoItems] = useState([]);
   const lastItemRef = useRef();
+  const theme = useColorScheme();
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderPlusButton onPress={props.createNewTodoListItem} />
       ),
+      headerStyle: {
+        backgroundColor: theme === "dark" ? "#1E1E1E" : "#FFFFFF",
+      },
+      headerTintColor: theme === "dark" ? "#FFFFFF" : "#000000",
     });
-  }, []); //  Set back button when the component mounts
+  }, [theme]); //  Set back button when the component mounts
 
   useEffect(() => {
     lastItemRef?.current?.focus(); // Focus on the last ToDo item
@@ -97,14 +102,14 @@ function TodoList({ navigation, ...props }) {
   //  When there are no items in the list, show an empty state
   function emptyListItem() {
     return (
-      <Text style={homeStyles.emptyTodoListItem}>
+      <Text style={homeStyles(theme).emptyTodoListItem}>
         You don't have any ToDo's yet. Tap "+" to create a new ToDo
       </Text>
     );
   }
 
   return (
-    <View style={homeStyles.todoList}>
+    <View style={homeStyles(theme).todoList}>
       <FlatList
         data={props.todoListItems}
         renderItem={_renderItem}
