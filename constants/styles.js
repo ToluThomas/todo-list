@@ -19,6 +19,7 @@ export const homeStyles = StyleSheet.create({
   },
   todoListItem: {
     flexDirection: "row",
+    alignItems: 'center',
     marginBottom: scale(5),
   },
   todoListItemText: {
