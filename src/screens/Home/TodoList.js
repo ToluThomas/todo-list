@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text, FlatList } from "react-native";
 import { connect } from "react-redux";
 import HeaderPlusButton from "../../components/HeaderPlusButton";
