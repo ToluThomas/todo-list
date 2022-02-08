@@ -29,7 +29,10 @@ export const homeStyles = (colourScheme = "light") =>
       marginLeft: scale(10),
       color: colourScheme === "dark" ? "#FFFFFF" : "#000000",
     },
-    emptyTodoListItem: { textAlign: "center" },
+    emptyTodoListItem: {
+      textAlign: "center",
+      color: colourScheme === "dark" ? "#FFFFFF" : "#000000",
+    },
   });
 
 /**
